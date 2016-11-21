@@ -4,9 +4,14 @@ app.controller("eveController", ["$scope", "eveService", function($scope, eveSer
   $scope.view.hide = false;
   $scope.view.showMe = function(){
     eveService.grabItems().then(function(data){
-      console.log(data['data']['items'][0]);
-      $scope.view.hide = true;
-      $scope.view.info = data['items'][0];
+      var itemInfo = data['data']['items'];
+      for (var i = 0; i < itemInfo.length; i++) {
+        if(itemInfo[i]['type']['id'] == 5439){
+          console.log(itemInfo[i]);
+          $scope.view.hide = true;
+          $scope.view.info = itemInfo[i];
+        }
+      }
     })
   }
 }])
