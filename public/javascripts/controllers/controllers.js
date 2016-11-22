@@ -6,7 +6,15 @@ app.controller("eveController", ["$scope", "eveService", function($scope, eveSer
   $scope.view.itemId = 5439;
   $scope.view.stationId = 60003760;
   eveService.grabSell($scope.view.regionId, $scope.view.itemId).then(function(data){
-    // console.log(data['data']['items'][0]);
+    var innest = data['data']['items']
+    var newArr = [];
+    for (var i = 0; i < innest.length; i++) {
+      if(innest[i]['location']['id'] == $scope.view.stationId){
+        newArr.push(innest[i]['price'])
+      }
+    }
+    var maxSell = Math.min(...newArr);
+    console.log('jita-sell', maxSell);
   });
   eveService.grabBuy($scope.view.regionId, $scope.view.itemId).then(function(data){
     var getinnest = data['data']['items']
