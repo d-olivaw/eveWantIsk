@@ -12,5 +12,8 @@ app.factory('eveService', function($http) {
       //grab buy prices for item at correct regionid
       return $http.get('https://crest-tq.eveonline.com/market/'+ regionId + '/orders/buy/?type=https://crest-tq.eveonline.com/inventory/types/' + itemId + '/')
     },
+    grab7Day: function(regionId, itemId){
+      return $http.get('https://crest-tq.eveonline.com/market/' + regionId + '/history/?type=https://crest-tq.eveonline.com/inventory/types/' + itemId + '/')
+    }
   }
 });
