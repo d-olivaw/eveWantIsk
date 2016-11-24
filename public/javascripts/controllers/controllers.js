@@ -18,7 +18,6 @@ app.controller("eveController", ["$scope", "eveService", function($scope, eveSer
     let itemObj = {};
     let itemIdinArr = $scope.view.itemArr[i]
     eveService.grabSell($scope.view.regionId, itemIdinArr).then(function(data){
-      // console.log(data);
       var innest = data['data']['items'];
       var accumVolSell = 0;
       var newArr = [];
@@ -33,9 +32,7 @@ app.controller("eveController", ["$scope", "eveService", function($scope, eveSer
       itemObj.sell = minSell;
       itemObj.name = innest[0]['type']['name'];
       itemObj.id = itemIdinArr;
-      // console.log('jita-sell', minSell);
     }).then(function(data){
-      // console.log(itemIdinArr);
       eveService.grabBuy($scope.view.regionId, itemIdinArr).then(function(data){
         var getinnest = data['data']['items']
         var newArr = [];
@@ -47,16 +44,22 @@ app.controller("eveController", ["$scope", "eveService", function($scope, eveSer
         var maxBuy = Math.max(...newArr);
         itemObj.buy = maxBuy;
         itemObj.markup = itemObj.buy / itemObj.sell;
-        // console.log('jita-buy', maxBuy);
       });
     }).then(function(data){
       eveService.grab7Day($scope.view.regionId, itemIdinArr).then(function(data){
-        // $scope.view.wrapArr.push(itemObj);
-        for (var i = 0; i < 7; i++) {
-          var idx = data.length - i - 1;
-          console.log(idx);
-          // console.log(data['data']['items'][0]);
+        var getinnest = data['data']['items']
+        var average = 0;
+        var nDay = 7;
+        for (var i = 0; i < nDay; i++) {
+          var idx = getinnest.length - i - 1;
+          var volI = getinnest[i]['volume'];
+          average += volI;
         }
+        average /= nDay;
+        itemObj.histAvg = average;
+        // Calculate the potential profit
+        itemObj.projProfit = 0;
+        $scope.view.wrapArr.push(itemObj);
       })
     }).catch(function(err){
       console.log(err);
