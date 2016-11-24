@@ -1,2 +1,22 @@
-<button ng-click="view.showMe()">Show Me</button>
-<h3 ng-show="view.hide"></h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Profit Potential</th>
+      <th>Item</th>
+      <th>jita-sell</th>
+      <th>jita-buy</th>
+      <th>Historical Average</th>
+      <th>Markup</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="item in view.wrapArr | orderBy: item.profitPotential">
+      <td>{{item.profitPotential | number: 3}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.sell | number: 2}}</td>
+      <td>{{item.buy | number: 2}}</td>
+      <td>{{item.histAvg | number: 3}}</td>
+      <td>{{item.markup | number: 3}}</td>
+    </tr>
+  </tbody>
+</table>
