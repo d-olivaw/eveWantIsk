@@ -1,3 +1,8 @@
+<select id="sortie" ng-model="sortie">
+  <option value="-1 * profitPotential">Sort By Profit Potential</option>
+  <option value="name">Sort By Name</option>
+  <option value="markup">Sort By Markup</option>
+</select>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -10,7 +15,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="item in view.wrapArr | orderBy: item.profitPotential">
+    <tr ng-repeat="item in view.wrapArr | orderBy: sortie">
       <td>{{item.profitPotential | number: 3}}</td>
       <td>{{item.name}}</td>
       <td>{{item.sell | number: 2}}</td>
