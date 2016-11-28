@@ -1,2 +1,9 @@
-<h1>Hi this is login</h1>
-<h3>{{view.hello}}</h3>
+<form ng-submit="view.logIn()" name="logInForm">
+    <h1>Log In</h1>
+    <input type="text" name="username" ng-model="view.username" placeholder="username" required>
+    <br>
+    <input type="password" name="password" ng-model="view.password" placeholder="password" required>
+    <br>
+    <input type="submit">
+    <h5>{{view.error}}</h5>
+  </form>
