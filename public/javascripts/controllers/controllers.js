@@ -1,4 +1,4 @@
-app.controller("eveController", ["$scope", "eveService", function($scope, eveService){
+app.controller("eveController", ["$scope", "eveService", '$location', function($scope, eveService, $location){
   $scope.view = {};
   $scope.view.hello = "hello";
   $scope.view.hide = false;
@@ -12,61 +12,63 @@ app.controller("eveController", ["$scope", "eveService", function($scope, eveSer
       console.log(data);
     })
   }
-  for (var i = 0; i < $scope.view.itemArr.length; i++) {
-    let itemObj = {};
-    let itemIdinArr = $scope.view.itemArr[i]
-    eveService.grabSell($scope.view.regionId, itemIdinArr).then(function(data){
-      var innest = data['data']['items'];
-      var accumVolSell = 0;
-      var newArr = [];
-      for (var i = 0; i < innest.length; i++) {
-        if(innest[i]['location']['id'] == $scope.view.stationId){
-          newArr.push(innest[i]['price']);
-          accumVolSell += innest[i]['volume'];
-        }
-      }
-      var minSell = Math.min(...newArr);
-      itemObj.volumeSell = accumVolSell;
-      itemObj.sell = minSell;
-      itemObj.name = innest[0]['type']['name'];
-      itemObj.id = itemIdinArr;
-    }).then(function(data){
-      eveService.grabBuy($scope.view.regionId, itemIdinArr).then(function(data){
-        var getinnest = data['data']['items']
+  if($location.path() == '/home'){
+    for (var i = 0; i < $scope.view.itemArr.length; i++) {
+      let itemObj = {};
+      let itemIdinArr = $scope.view.itemArr[i]
+      eveService.grabSell($scope.view.regionId, itemIdinArr).then(function(data){
+        var innest = data['data']['items'];
+        var accumVolSell = 0;
         var newArr = [];
-        for (var i = 0; i < getinnest.length; i++) {
-          if(getinnest[i]['location']['id'] == $scope.view.stationId){
-            newArr.push(getinnest[i]['price'])
+        for (var i = 0; i < innest.length; i++) {
+          if(innest[i]['location']['id'] == $scope.view.stationId){
+            newArr.push(innest[i]['price']);
+            accumVolSell += innest[i]['volume'];
           }
         }
-        var maxBuy = Math.max(...newArr);
-        itemObj.buy = maxBuy;
-        itemObj.markup = 0.0
-        if (itemObj.buy != 0) {
-          itemObj.markup = (itemObj.sell / itemObj.buy) - 1;
-        }
-      });
-    }).then(function(data){
-      eveService.grab7Day($scope.view.regionId, itemIdinArr).then(function(data){
-        var getinnest = data['data']['items']
-        var average = 0;
-        var nDay = 7;
-        for (var i = 0; i < nDay; i++) {
-          var idx = getinnest.length - i - 1;
-          var volI = getinnest[i]['volume'];
-          average += volI;
-        }
-        average /= nDay;
-        itemObj.histAvg = average;
-        // Calculate the potential profit
-        itemObj.profitPotential = calcProfitPotential(itemObj);
-        $scope.view.wrapArr.push(itemObj);
+        var minSell = Math.min(...newArr);
+        itemObj.volumeSell = accumVolSell;
+        itemObj.sell = minSell;
+        itemObj.name = innest[0]['type']['name'];
+        itemObj.id = itemIdinArr;
+      }).then(function(data){
+        eveService.grabBuy($scope.view.regionId, itemIdinArr).then(function(data){
+          var getinnest = data['data']['items']
+          var newArr = [];
+          for (var i = 0; i < getinnest.length; i++) {
+            if(getinnest[i]['location']['id'] == $scope.view.stationId){
+              newArr.push(getinnest[i]['price'])
+            }
+          }
+          var maxBuy = Math.max(...newArr);
+          itemObj.buy = maxBuy;
+          itemObj.markup = 0.0
+          if (itemObj.buy != 0) {
+            itemObj.markup = (itemObj.sell / itemObj.buy) - 1;
+          }
+        });
+      }).then(function(data){
+        eveService.grab7Day($scope.view.regionId, itemIdinArr).then(function(data){
+          var getinnest = data['data']['items']
+          var average = 0;
+          var nDay = 7;
+          for (var i = 0; i < nDay; i++) {
+            var idx = getinnest.length - i - 1;
+            var volI = getinnest[i]['volume'];
+            average += volI;
+          }
+          average /= nDay;
+          itemObj.histAvg = average;
+          // Calculate the potential profit
+          itemObj.profitPotential = calcProfitPotential(itemObj);
+          $scope.view.wrapArr.push(itemObj);
+        })
+      }).catch(function(err){
+        console.log(err);
       })
-    }).catch(function(err){
-      console.log(err);
-    })
+    }
+    console.log($scope.view.wrapArr);
   }
-  console.log($scope.view.wrapArr);
 }])
 
 function calcProfitPotential(item) {
