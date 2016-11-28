@@ -14,6 +14,12 @@ app.factory('eveService', function($http) {
     },
     grab7Day: function(regionId, itemId){
       return $http.get('https://crest-tq.eveonline.com/market/' + regionId + '/history/?type=https://crest-tq.eveonline.com/inventory/types/' + itemId + '/')
+    },
+    login: function(username, pass){
+      var user = {};
+      user.username = username;
+      user.pass = pass;
+      return $http.post('/login', user)
     }
   }
 });
