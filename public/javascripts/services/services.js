@@ -1,5 +1,11 @@
 app.factory('eveService', function($http) {
   return {
+    login: function(username, pass){
+      var user = {};
+      user.username = username;
+      user.pass = pass;
+      return $http.post('/login', user)
+    },
     grabItemsById: function(){
       //we're not using this for now. could get average value
       return $http.get('https://crest-tq.eveonline.com/market/prices/')
@@ -14,21 +20,18 @@ app.factory('eveService', function($http) {
     },
     grab7Day: function(regionId, itemId){
       return $http.get('https://crest-tq.eveonline.com/market/' + regionId + '/history/?type=https://crest-tq.eveonline.com/inventory/types/' + itemId + '/')
-    },
-    login: function(username, pass){
-      var user = {};
-      user.username = username;
-      user.pass = pass;
-      return $http.post('/login', user)
     }
   }
 });
 
-app.factory("eveInterceptor", function eveInterceptor() {
+app.factory("eveInterceptor", function eveInterceptor($location) {
   return {
     request: function(config){
       // console.log(localStorage.jwt);
-      if (localStorage.jwt) {
+      if (localStorage.jwt && $location.path() == '/home') {
+        //do something here?
+      }
+      else if (localStorage.jwt) {
         config.headers.Authorization = 'Bearer ' + localStorage.jwt;
       }
       return config;
