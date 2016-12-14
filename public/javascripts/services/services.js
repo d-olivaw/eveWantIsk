@@ -24,17 +24,17 @@ app.factory('eveService', function($http) {
   }
 });
 
-app.factory("eveInterceptor", function eveInterceptor($location) {
-  return {
-    request: function(config){
-      // console.log(localStorage.jwt);
-      if (localStorage.jwt && $location.path() == '/home') {
-        //do something here?
-      }
-      else if (localStorage.jwt) {
-        config.headers.Authorization = 'Bearer ' + localStorage.jwt;
-      }
-      return config;
-    }
-  }
-})
+// app.factory("eveInterceptor", function eveInterceptor($location) {
+//   return {
+//     request: function(config){
+//       // console.log(localStorage.jwt);
+//       if (localStorage.jwt && $location.path() == '/home') {
+//         //do something here?
+//       }
+//       else if (localStorage.jwt) {
+//         config.headers.Auhorization = 'Bearer ' + localStorage.jwt;
+//       }
+//       return config;
+//     }
+//   }
+// })
