@@ -3,6 +3,11 @@
   <option value="name">Sort By Name</option>
   <option value="-markup">Sort By Markup</option>
 </select>
+<select id="region" ng-model="regionFilter">
+  <option value="jita" selected>Jita</option>
+  <option value="amarr">Amarr</option>
+  <option value="doDixie">DoDixie</option>
+</select>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -15,7 +20,8 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="item in view.wrapArr | orderBy: sortie">
+    {{regionFilter}}
+     <tr ng-repeat="item in view.wrapArr | orderBy: sortie" ng-show="item.regName == regionFilter">
       <td>{{item.profitPotential | number: 3}}</td>
       <td>{{item.name}}</td>
       <td>{{item.sell | number: 2}}</td>
