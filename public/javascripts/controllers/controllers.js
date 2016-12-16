@@ -89,6 +89,11 @@ app.controller("eveController", ["$scope", "eveService", '$location', "$window",
       }
     })
   }
+}])
+
+app.controller("secondaryController", ["$scope", "eveService", "$location", "$window", function($scope, eveService, $location, $window){
+  $scope.view = {};
+  
   $scope.view.logout = function() {
     localStorage.clear();
     $location.path('/');
