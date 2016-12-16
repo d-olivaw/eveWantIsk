@@ -71,6 +71,7 @@ app.controller("eveController", ["$scope", "eveService", '$location', "$window",
           itemObj.regionId = regionId;
           itemObj.regName = regName;
           $scope.view.wrapArr.push(itemObj);
+          eveService.dbAdd(itemObj);
         })
       }).catch(function(err){
         console.log(err);
