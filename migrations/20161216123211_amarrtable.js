@@ -2,8 +2,6 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('amarr', function(table){
     table.increments('id').primary();
-    table.string('regionId').notNullable();
-    table.string('stationId').notNullable();
     table.integer('itemId').notNullable().unique();
     table.string('itemName').notNullable();
     table.bigInteger('volumeSell').notNullable();
