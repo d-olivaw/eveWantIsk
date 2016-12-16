@@ -14,6 +14,20 @@ var token;
 router.get('/', function(req, res, next) {
   res.render('index', {title: 'Express'});
 });
+router.post('/api/database', function(req,res,next){
+  knex(req.body.regName).insert({
+    itemId: req.body.id,
+    itemName: req.body.name,
+    volumeSell: req.body.volumeSell,
+    buy: req.body.buy,
+    sell: req.body.sell,
+    markup: req.body.markup,
+    histAvg: req.body.histAvg,
+    profitPotential: req.body.profitPotential,
+  }).then(function(data){
+    console.log(data);
+  })
+})
 router.post('/login', function(req, res, next) {
   knex('users')
   .where({
