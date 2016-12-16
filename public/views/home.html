@@ -20,8 +20,7 @@
     </tr>
   </thead>
   <tbody>
-    {{regionFilter}}
-     <tr ng-repeat="item in view.wrapArr | orderBy: sortie" ng-show="item.regName == regionFilter">
+     <tr ng-repeat="item in view.wrapArr | orderBy: sortie" ng-show="item.regName === regionFilter">
       <td>{{item.profitPotential | number: 3}}</td>
       <td>{{item.name}}</td>
       <td>{{item.sell | number: 2}}</td>
