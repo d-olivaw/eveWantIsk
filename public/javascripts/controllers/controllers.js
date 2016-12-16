@@ -5,7 +5,7 @@ app.controller("eveController", ["$scope", "eveService", '$location', "$window",
   $scope.view.wrapArr = [];
   var jitaMarket = {regionId: 10000002, stationId: 60003760, name: "jita"};
   var amarrMarket = {regionId: 10000043, stationId: 60008494, name: "amarr"};
-  var doDixieMarket = {regionId: 10000032, stationId: 60011866, name: "doDixie"};
+  var doDixieMarket = {regionId: 10000032, stationId: 60011866, name: "dodixie"};
 
   var allMarkets = [];
   allMarkets.push(jitaMarket, amarrMarket, doDixieMarket);
@@ -19,6 +19,7 @@ app.controller("eveController", ["$scope", "eveService", '$location', "$window",
   }
 
   function getMarketOrders(regionId, stationId, regName){
+    console.log(regName);
     for (var i = 0; i < $scope.view.itemArr.length; i++) {
       let itemObj = {};
       let itemIdinArr = $scope.view.itemArr[i]
@@ -93,7 +94,7 @@ app.controller("eveController", ["$scope", "eveService", '$location', "$window",
 
 app.controller("secondaryController", ["$scope", "eveService", "$location", "$window", function($scope, eveService, $location, $window){
   $scope.view = {};
-  
+
   $scope.view.logout = function() {
     localStorage.clear();
     $location.path('/');
