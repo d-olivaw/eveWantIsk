@@ -7,7 +7,6 @@ app.factory('eveService', function($http) {
       return $http.post('/login', user)
     },
     dbAdd: function(obj){
-      console.log(obj);
       return $http.post('/api/database', obj)
     },
     grabItemsById: function(){
