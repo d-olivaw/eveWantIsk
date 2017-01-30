@@ -9,6 +9,9 @@ app.factory('eveService', function($http) {
     dbAdd: function(obj){
       return $http.post('/api/database', obj)
     },
+    grabData: function(){
+      return $http.get('/api/data')
+    },
     grabItemsById: function(){
       //we're not using this for now. could get average value
       return $http.get('https://crest-tq.eveonline.com/market/prices/')

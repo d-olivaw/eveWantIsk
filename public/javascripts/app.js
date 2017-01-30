@@ -43,8 +43,6 @@ app.config(function($routeProvider, $httpProvider){
 app.run(function($rootScope, $location) {
 
   if (localStorage.jwt) {
-    console.log(localStorage.jwt);
     $rootScope.user = jwt_decode(localStorage.jwt);
-    console.log("USER: " + $rootScope.user);
   }
 });
