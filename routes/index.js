@@ -14,6 +14,26 @@ var token;
 router.get('/', function(req, res, next) {
   res.render('index', {title: 'Express'});
 });
+
+router.get('/api/data', function(req,res,next){
+  var promiseArr = [];
+  var regionObj = {};
+  knex('jita').then(function(data){
+    regionObj.jita = data;
+  }).then(function(){
+    promiseArr.push(knex('amarr').then(function(data){
+      regionObj.amarr = data;
+    }));
+    promiseArr.push(knex('dodixie').then(function(data){
+      regionObj.dodixie = data;
+    }));
+  }).then(function(){
+    return Promise.all(promiseArr).then(function(){
+      res.json(regionObj);
+    })
+  })
+});
+
 router.post('/api/database', function(req,res,next){
   knex.raw('INSERT INTO ' + req.body.regName + " "
   + "(itemid, itemname, volumesell, buy, sell, markup, histavg, profitpotential)"
@@ -30,7 +50,8 @@ router.post('/api/database', function(req,res,next){
   }).catch(function(err){
     console.log(err);
   })
-})
+});
+
 router.post('/login', function(req, res, next) {
   knex('users')
   .where({
@@ -38,12 +59,12 @@ router.post('/login', function(req, res, next) {
   })
   .first()
   .then(function(data){
-    console.log(data);
+    // console.log(data);
     if(!data){
       res.json({errors: 'username or password is incorrect'})
     } else if(bcrypt.compareSync(req.body.pass, data.password)){
       token = jwt.sign({id: data.id, username: data.username}, process.env.SECRET);
-      console.log(token);
+      // console.log(token);
       res.json({token:token});
     } else {
       res.json({errors: 'username or password is incorrect'})

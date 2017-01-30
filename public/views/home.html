@@ -1,6 +1,6 @@
 <select id="sortie" ng-model="sortie">
-  <option value="-profitPotential">Sort By Profit Potential</option>
-  <option value="name">Sort By Name</option>
+  <option value="-profitpotential">Sort By Profit Potential</option>
+  <option value="itemname">Sort By Name</option>
   <option value="-markup">Sort By Markup</option>
 </select>
 <select id="region" ng-model="regionFilter">
@@ -20,12 +20,12 @@
     </tr>
   </thead>
   <tbody>
-     <tr ng-repeat="item in view.wrapArr | orderBy: sortie" ng-show="item.regName === regionFilter">
-      <td>{{item.profitPotential | number: 3}}</td>
-      <td>{{item.name}}</td>
+     <tr ng-repeat="item in view.backendObj[regionFilter] | orderBy: sortie">
+      <td>{{item.profitpotential | number: 3}}</td>
+      <td>{{item.itemname}}</td>
       <td>{{item.sell | number: 2}}</td>
       <td>{{item.buy | number: 2}}</td>
-      <td>{{item.histAvg | number: 3}}</td>
+      <td>{{item.histavg | number: 3}}</td>
       <td>{{item.markup | number: 3}}</td>
     </tr>
   </tbody>
