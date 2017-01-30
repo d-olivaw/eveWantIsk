@@ -15,8 +15,14 @@ app.controller("eveController", ["$scope", "eveService", '$location', "$window",
       var allMarketIt = allMarkets[i]
       getMarketOrders(allMarketIt['regionId'], allMarketIt['stationId'], allMarketIt['name']);
     }
+    getInfoFromBack();
   }
-
+  function getInfoFromBack(){
+    eveService.grabData().then(function(data){
+      $scope.view.backendObj = data['data'];
+      console.log('data back from backend', data['data']);
+    })
+  }
   function getMarketOrders(regionId, stationId, regName){
     for (var i = 0; i < $scope.view.itemArr.length; i++) {
       let itemObj = {};
