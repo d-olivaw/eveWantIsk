@@ -1,2 +1,4 @@
 .env
 node_modules
+public/stylesheets/.sass-cache
+public/stylesheets/.sass-cache/*
