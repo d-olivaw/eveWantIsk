@@ -15,12 +15,14 @@
   <script src="javascripts/directives/directives.js" charset="utf-8"></script>
 </head>
 <body>
-  <header>
-    <div ng-controller="secondaryController" ng-show="user">
-      <h1>Hello {{user.username}}</h1>
-      <button ng-click="view.logout()">Logout</button>
-    </div>
+  <header ng-controller="secondaryController" ng-show="user" id="heading">
+  <img ng-src="logo.png" alt="Description"/>
+    <ul>
+      <li>Hello {{user.username}}</li>
+      <li><button ng-click="view.logout()">Logout</button></li>
+    </ul>
   </header>
+  <br><br><br>
   <main ng-view></main>
 </body>
 </html>

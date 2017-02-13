@@ -1,0 +1,27 @@
+#heading {
+  background-color: black;
+  top: 0;
+  bottom: 5;
+  width: 100%;
+  position: fixed;
+}
+header img {
+  float: left;
+  height: 75px;
+  width: 75px;
+  margin-left: 1em;
+}
+header ul {
+  float: right;
+  list-style-type: none;
+  padding-top: 1.5em;
+  color: white;
+}
+header li {
+  display: inline-block;
+  margin-right: 1em;
+  font-size: 1.5em;
+}
+header button {
+  color: black;
+}
